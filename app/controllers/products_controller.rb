@@ -65,8 +65,6 @@ class ProductsController < ApplicationController
       @order.quantity = 1 + @order.quantity
     end
 
-    flash[:notice] = 'Product bought!'
-
     if @order.save
       flash[:notice] = 'Product bought!'
     else
