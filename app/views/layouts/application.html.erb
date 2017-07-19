@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CrudDemo</title>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' %>
+  <%= stylesheet_link_tag    'https://cdn.datatables.net/s/dt/dt-1.10.10,r-2.0.0/datatables.min.css' %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true  %>
+  <%= javascript_include_tag 'http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js' %>
+  <%= javascript_include_tag 'http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js' %> 
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <% if flash[:notice] %>
+          <div class="alert alert-success"><%= flash[:notice] %></div>
+      <% end %>
+      <%= yield %>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' %>
+<%= javascript_include_tag 'https://cdn.datatables.net/s/dt/dt-1.10.10,r-2.0.0/datatables.min.js' %>
+</body>
+</html>
