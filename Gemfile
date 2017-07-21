@@ -38,12 +38,14 @@ gem 'grape'
 gem "grape-active_model_serializers"
 gem 'devise'
 gem 'activeadmin', '~> 1.0'
-gem 'paperclip'
 gem "sprockets-rails", :require => "sprockets/railtie"
 gem "bootstrap-sass", "~> 3.3.7"
 
 gem 'carrierwave', '~> 0.10.0'
 gem 'mini_magick', '~> 4.3'
+
+gem 'active_skin'
+gem 'chartkick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

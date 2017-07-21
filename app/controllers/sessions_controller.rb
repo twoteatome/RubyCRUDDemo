@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by name: params[:session][:name].downcase
     if user && user.authenticate(params[:session][:password])
+      @current_user = user
       flash[:success] = "Login success"
       session[:user_id] = user.id
       redirect_to root_path

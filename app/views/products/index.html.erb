@@ -15,10 +15,9 @@
       <tr>
         <th>Name</th>
         <th>Price</th>
-        <th>Image</th>
+        <th>Seller</th>
         <th>Short Description</th>
         <th>Full Description</th>
-        <th>Last Modified</th>
         <th>Date Added</th>
         <th>Actions</th>
       </tr>
@@ -28,10 +27,9 @@
           <tr>
             <td><%= product.name %></td>
             <td><%= product.price %>円</td>
-            <td><%= image_tag product.image.thumb.url, :width => 50 %></td>
+            <td><%= product.user_name %></td>
             <td><%= truncate(product.short_description, :length => 75) %></td>
             <td><%= truncate(product.full_description, :length => 150) %></td>
-            <td><%= product.updated_at %></td>
             <td><%= product.created_at %></td>
             <td>
               <div class="btn-group">

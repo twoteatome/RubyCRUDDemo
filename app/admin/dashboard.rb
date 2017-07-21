@@ -3,12 +3,47 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
+    columns do
+      column do
+        panel "Recent Products" do
+          table_for Product.order("id desc").limit(10) do
+            column("Name") { |product| link_to(product.name, admin_product_path(product)) }
+            column("Price") { |product| product.price }
+            column("Description")   { |product| product.short_description }
+          end
+        end
       end
-    end
+
+      column do
+        panel "Recent Customers" do
+          table_for User.order("id desc").limit(10).each do |_user|
+            column(:id)    { |user| user.id }
+            column(:name)    { |user| link_to(user.name, admin_user_path(user)) }
+            column(:created_at)    { |user| user.created_at }
+          end
+        end
+      end
+    end # columns
+
+    columns do
+      column do
+        div do
+          pie_chart Product.group(:user_id).all.count
+        end
+      end
+
+      column do
+        panel "Recent Orders" do
+          table_for Order.joins(:user).joins(:product).select('orders.*, users.name, products.price, products.name as product_name').order("id desc").limit(10).each do
+            column("ID") { |order| link_to(order.id, admin_order_path(order)) }
+            column("Product Name") { |order| link_to(order.product_name, admin_product_path(order.product_id)) }
+            column("Seller") { |order| link_to(order.name, admin_user_path(order.user_id)) }
+            column("Quantity")   { |order| order.quantity }
+            column("Price")   { |order| order.quantity * order.price }
+          end
+        end
+      end
+    end # columns
 
     # Here is an example of a simple dashboard with columns and panels.
     #

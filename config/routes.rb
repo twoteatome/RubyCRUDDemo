@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get     "login"    => "sessions#new"
   post    "login"    => "sessions#create"
   get     "logout"   => "sessions#destroy"
-  post    "buy"    => "products#buy"
-  get    "buy"    => "products#buy"
+  post    "buy"      => "products#buy"
+  get     "buy"      => "products#buy"
 
   resources :products
   resources :users

@@ -1,14 +1,12 @@
 class ProductsController < ApplicationController
   # GET method to get all products from database
   def index
-    @products = Product.all
-    @current_user ||= User.find_by id: session[:user_id]
+    @products = Product.joins(:user).select('products.*, users.name as user_name').all
   end
  
   # GET method to get a product by id
   def show
-    @product = Product.find(params[:id])
-    @user = User.find(@product.user_id)
+    @product = Product.joins(:user).select('products.*, users.name as user_name').find(params[:id])
   end
  
   # GET method for the new product form
@@ -19,9 +17,7 @@ class ProductsController < ApplicationController
   # POST method for processing form data
   def create
     @product = Product.new(product_params)
-
-    @product.image = params[:image]
-    @product.user = User.find_by id: session[:user_id]
+    @product.user = @current_user
 
     if @product.save
       flash[:notice] = 'Product added!'
@@ -40,9 +36,7 @@ class ProductsController < ApplicationController
   # PUT method for updating in database a product based on id
   def update
     @product = Product.find(params[:id])
-
-    @product.image = params[:image]
-    @product.user = User.find_by id: session[:user_id]
+    @product.user = @current_user
 
     if @product.update_attributes(product_params)
       flash[:notice] = 'Product updated!'
@@ -55,7 +49,6 @@ class ProductsController < ApplicationController
 
   def buy
     @order = Order.where(:user_id => session[:user_id]).where(:product_id => params[:product_id]).first
-    puts @order
     if @order.blank?
       @order = Order.new
       @order.user = User.find_by id: session[:user_id]
@@ -86,6 +79,6 @@ class ProductsController < ApplicationController
  
   # we used strong parameters for the validation of params
   def product_params
-    params.require(:product).permit(:name, :price, :image, :old_price, :short_description, :full_description)
+    params.require(:product).permit(:name, :price, :short_description, :full_description)
   end
 end
