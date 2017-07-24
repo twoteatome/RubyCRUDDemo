@@ -28,7 +28,7 @@ ActiveAdmin.register_page "Dashboard" do
     columns do
       column do
         div do
-          pie_chart Product.group(:user_id).all.count
+          pie_chart Order.group(:product_id).all.count
         end
       end
 
@@ -39,7 +39,8 @@ ActiveAdmin.register_page "Dashboard" do
             column("Product Name") { |order| link_to(order.product_name, admin_product_path(order.product_id)) }
             column("Seller") { |order| link_to(order.name, admin_user_path(order.user_id)) }
             column("Quantity")   { |order| order.quantity }
-            column("Price")   { |order| order.quantity * order.price }
+            column("Price")   { |order| number_to_currency order.quantity * order.price, :unit => "円" }
+            column("Status")   { |order| status_tag(order.state) }
           end
         end
       end

@@ -26,7 +26,7 @@
       <% @products.each do |product| %>
           <tr>
             <td><%= product.name %></td>
-            <td><%= product.price %>円</td>
+            <td><%= number_to_currency product.price, :unit => "円" %></td>
             <td><%= product.user_name %></td>
             <td><%= truncate(product.short_description, :length => 75) %></td>
             <td><%= truncate(product.full_description, :length => 150) %></td>

@@ -54,6 +54,13 @@ class ProductsController < ApplicationController
       @order.user = User.find_by id: session[:user_id]
       @order.product = Product.find(params[:product_id])
       @order.quantity = 1
+      @order.status = 0
+    elsif @order.status != 0
+      @order = Order.new
+      @order.user = User.find_by id: session[:user_id]
+      @order.product = Product.find(params[:product_id])
+      @order.quantity = 1
+      @order.status = 0
     else
       @order.quantity = 1 + @order.quantity
     end
