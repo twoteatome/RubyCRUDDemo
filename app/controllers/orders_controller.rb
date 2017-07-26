@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    @orders = Order.joins(:user).joins(:product).select('orders.*, users.name, products.price, products.name as product_name').all
+    @orders = Order.joins(:user).joins(:product).select('orders.*, users.name, products.price, products.name as product_name').where(:user_id => @current_user.id).all
   end
  
   # DELETE method for deleting a product from database based on id

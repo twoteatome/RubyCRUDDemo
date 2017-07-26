@@ -2,6 +2,22 @@ ActiveAdmin.register Order do
 
   config.per_page = [10, 50, 100]
 
+  batch_action :complete do |ids|
+    batch_action_collection.find(ids).each do |order|
+      order.status = 1
+      order.save
+    end
+    redirect_to "/admin/orders", alert: "The orders have been updated."
+  end
+
+  batch_action :in_progress, priority: 1 do |ids|
+    batch_action_collection.find(ids).each do |order|
+      order.status = 0
+      order.save
+    end
+    redirect_to "/admin/orders", alert: "The orders have been updated."
+  end
+
   actions :index, :show
 
   filter :product
@@ -44,9 +60,7 @@ ActiveAdmin.register Order do
       status_tag(order.state)
     end
     column :created_at
-    action_item :view, only: :show do
-      link_to 'View on site', post_path(post) if post.published?
-    end
+    actions
   end
 
 end

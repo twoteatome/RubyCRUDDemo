@@ -27,8 +27,13 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        div do
-          pie_chart Order.group(:product_id).all.count
+        panel "News" do
+          ul do
+            li "KASPERSKY'S STELLAR ANTIVIRUS FINALLY GOES FREE"
+            li "RYZEN SALES LEAD AMD EARNINGS, DESPITE ISSUES WITH GAME OPTIMIZATION AND MINING"
+            li "ADOBE FLASH WILL DIE BY 2020, ADOBE AND BROWSER MAKERS SAY"
+            li "RED HAT'S BOLTRON SNAPS TOGETHER A MODULAR LINUX SERVER"
+          end
         end
       end
 
